@@ -3,7 +3,15 @@ import React from "react";
 export default function HomePage() {
 	React.useEffect(() => {
 		console.log("home");
+		loadResource()
 	}, []);
+
+
+	async function loadResource() {
+		// const a = await getAllCoins()
+		// console.log(a)
+	}
+
 	return (
 		<>
 			<div>
