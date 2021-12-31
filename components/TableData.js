@@ -9,10 +9,10 @@ import {
     Paper,
 } from "@mui/material";
 
-export default function TableData({ data = [] }) {
+export default function TableData({ data = [], onClick }) {
     if (data.length)
         return (
-            <TableContainer sx={{ maxHeight: 440 }} component={Paper}>
+            <TableContainer sx={{ maxHeight: 250 }} component={Paper}>
                 <Table stickyHeader aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -26,8 +26,10 @@ export default function TableData({ data = [] }) {
                     <TableBody>
                         {data.map((row) => (
                             <TableRow
+                                hover
                                 key={row}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                onClick={() => onClick(row)}
                             >
                                 <TableCell component="th" scope="row">
                                     {row}
