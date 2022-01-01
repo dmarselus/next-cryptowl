@@ -44,7 +44,7 @@ export default function TableData({ data = [], onClick }) {
                                 <TableCell align="right">{'asd'}</TableCell>
                                 <TableCell align="right">{'1234'}</TableCell> */}
                                 <TableCell component="th" scope="row">
-                                    <img width="20" height="20" src={row?.url} />
+                                    {row?.url && <img width="20" height="20" src={row?.url} />}
                                 </TableCell>
                                 <TableCell align="right">{row?.asset_id}</TableCell>
                                 <TableCell align="right">{row?.name}</TableCell>

@@ -37,10 +37,12 @@ export default function converter() {
 
 	useEffect(() => {
 		if (query) {
-			let temp = coinsInfo.filter(({ name }) =>
-				name.toLowerCase().includes(query.toLowerCase())
+			let lowerQuery = query.toLowerCase()
+			let temp = coinsInfo.filter(({ name, asset_id }) => {
+				return asset_id.toLowerCase().includes(lowerQuery) || name.toLowerCase().includes(lowerQuery)
+			}
 			);
-			setFilteredData(temp);
+			setFilteredData(temp.splice(0, 5));
 		}
 		return () => {
 			setFilteredData([]);

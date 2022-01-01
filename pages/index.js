@@ -20,6 +20,7 @@ function HomePage() {
 			const foundUrl = coinsImage.find(({ asset_id: image_asset_id }) => image_asset_id === info_asset_id)
 			return {
 				url: foundUrl?.url,
+				asset_id: info_asset_id,
 				...rest
 			}
 		})
