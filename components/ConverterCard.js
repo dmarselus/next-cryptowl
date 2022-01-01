@@ -1,5 +1,5 @@
 import React from 'react'
-import Box from '@mui/material/Box';
+import styles from "./ConverterCard.module.css";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 export default function ConverterCard({ data, onDelete }) {
     return (
-        <Card sx={{ width: 200 }}>
+        <Card className={styles.container} sx={{ width: 200 }}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Word of the Day

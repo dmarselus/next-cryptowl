@@ -1,20 +1,20 @@
-import classes from './MainNavigation.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
+import classes from "./MainNavigation.module.css";
+import Link from "next/link";
+import Image from "next/image";
 function MainNavigation() {
 	return (
 		<header className={classes.header}>
-			<Image
-				src="/images/logo.png" // Route of the image file
-				height={40} // Desired size with correct aspect ratio
-				width={120} // Desired size with correct aspect ratio
-				alt="Your Name"
-			/>
-			{/* <div className={classes.logo}>Cryptowl</div> */}
+			<Link href="/">
+				<a>
+					<Image src="/images/logo.png" height={40} width={120} alt="Your Name" />
+				</a>
+
+			</Link>
+
 			<nav>
 				<ul>
 					<li>
-						<Link href="/">Home</Link>
+						<Link href="/">home</Link>
 					</li>
 					<li>
 						<Link href="/converter">Converter</Link>

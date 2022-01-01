@@ -33,7 +33,9 @@
 }
 
 .header a:hover,
+.header img,
 .header a:active,
 .header a.active {
 	color: white;
+	cursor: pointer;
 }
