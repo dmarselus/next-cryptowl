@@ -1,4 +1,3 @@
-import { CoinsImageContext } from "./CoinsImageContext";
 import { CoinsInfoContext } from "./CoinsInfoContext";
-
-export { CoinsImageContext, CoinsInfoContext };
+import { CurrencyContext } from './CurrencyContext'
+export { CoinsInfoContext, CurrencyContext };

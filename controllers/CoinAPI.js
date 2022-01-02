@@ -64,6 +64,29 @@ export function getTopCoinsImage() {
         .catch((e) => console.error(e));
 }
 
+export async function getInitialCoins() {
+    console.log('Load Resource')
+    const coinsInfo = await getAllCoins()
+    const coinsImage = await getTopCoinsImage()
+
+
+    // return null;
+    const modifiedInfo = coinsInfo.map(({ asset_id: info_asset_id, ...rest }) => {
+        const foundUrl = coinsImage.find(({ asset_id: image_asset_id }) => image_asset_id === info_asset_id)
+        return {
+            url: foundUrl?.url,
+            asset_id: info_asset_id,
+            ...rest
+        }
+    })
+    return modifiedInfo
+
+}
+
+
+
+
+
 
 
 

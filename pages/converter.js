@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect, useContext } from "react";
-import ConverterCard from "../components/ConverterCard";
-import SearchBar from "../components/SearchBar";
+import ConverterCard from "../components/Converter/ConverterCard";
+import Input from "../components/Converter/Input";
 import TableData from "../components/TableData";
-import { CoinsInfoContext, CoinsImageContext } from "../context/CoinsInfoContext";
+import { CoinsInfoContext, CurrencyContext } from "../context";
+import InputAdornment from '@mui/material/InputAdornment';
+
 
 const DATA = [
 	{
@@ -28,18 +30,32 @@ const DATA = [
 ];
 export default function converter() {
 
+
+
 	const { coinsInfo } = useContext(CoinsInfoContext)
-	console.log({ coinsInfo })
+	const { currencyInfo } = useContext(CurrencyContext)
+
+
 
 	const [query, setQuery] = useState("");
+	const [valueToConvert, setValueToConvert] = useState(0)
 	const [filteredData, setFilteredData] = useState([]);
 	const [selectedData, setSelectedData] = useState([]);
 
 	useEffect(() => {
 		if (query) {
 			let lowerQuery = query.toLowerCase()
-			let temp = coinsInfo.filter(({ name, asset_id }) => {
-				return asset_id.toLowerCase().includes(lowerQuery) || name.toLowerCase().includes(lowerQuery)
+			let temp = []
+			coinsInfo.concat(currencyInfo).forEach((item) => {
+				const { name, asset_id } = item
+				let lowerAssetID = asset_id.toLowerCase()
+				let lowerName = name.toLowerCase()
+				if (lowerAssetID === lowerQuery || lowerName === lowerQuery) temp.unshift(item)
+
+				else if (
+					lowerAssetID.includes(lowerQuery) ||
+					lowerName.includes(lowerQuery)
+				) temp.push(item)
 			}
 			);
 			setFilteredData(temp.splice(0, 5));
@@ -49,12 +65,6 @@ export default function converter() {
 		};
 	}, [query]);
 
-	// useEffect(() => {
-	// 	let filteredData
-	// 	return () => {
-	// 		cleanup
-	// 	}
-	// }, [selectedData.length])
 
 	function renderCards() {
 		function deleteCard(idx) {
@@ -64,33 +74,55 @@ export default function converter() {
 		}
 
 		return (
-			<div style={{ display: "flex", flexWrap: "wrap" }}>
-				{selectedData.map((card, index) => (
-					<ConverterCard
-						key={index}
-						data={card}
-						onDelete={() => deleteCard(index)}
-					/>
-				))}
+			<div>
+				<div style={{ display: "flex", flexWrap: "wrap" }}>
+					{selectedData.map((card, index) => (
+						<ConverterCard
+							key={index}
+							data={card}
+							onDelete={() => deleteCard(index)}
+							value={valueToConvert}
+						/>
+					))}
+
+				</div>
+
+				<Input
+					onChange={(e) => setQuery(e.target.value)}
+					// fullWidth
+					label="Enter coin or crypto"
+				/>
+				<TableData data={filteredData} onClick={addCard} />
 			</div>
+
 		);
 	}
 
-	function onSelectSearch(data) {
+	function addCard(data) {
+		console.log(data)
+		// return
 		setQuery("");
-		setFilteredData([]);
-		setSelectedData([...selectedData, data]);
+		// setFilteredData([]);
+		let tempSelected = [...selectedData]
+		tempSelected.push(data)
+		setSelectedData(tempSelected)
+
 	}
 
 	return (
 		<div>
 			<h1>Converter</h1>
-			<SearchBar
-				onChange={(e) => setQuery(e.target.value)}
+			<Input
+				onChange={(e) => setValueToConvert(e.target.value)}
 				// fullWidth
-				label="Enter coin or crypto"
+				label="Enter Value"
+				type="number"
+				InputProps={{
+					startAdornment: <InputAdornment position="start">$</InputAdornment>,
+				}}
 			/>
-			<TableData data={filteredData} onClick={onSelectSearch} />
+
+
 			{renderCards()}
 		</div>
 	);
