@@ -1,7 +1,13 @@
+import React, { useState, useEffect, useContext } from "react";
+
+import { CoinsInfoContext, CurrencyContext } from "../context";
 import classes from "./MainNavigation.module.css";
 import Link from "next/link";
 import Image from "next/image";
 function MainNavigation() {
+
+	const { coinsInfo } = useContext(CoinsInfoContext)
+	const { currencyInfo } = useContext(CurrencyContext)
 	return (
 		<header className={classes.header}>
 			<Link href="/">
@@ -10,7 +16,8 @@ function MainNavigation() {
 				</a>
 
 			</Link>
-
+			<p>crypto: {coinsInfo.length}</p>
+			<p>forex: {currencyInfo.length}</p>
 			<nav>
 				<ul>
 					<li>

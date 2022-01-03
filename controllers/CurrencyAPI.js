@@ -1,7 +1,8 @@
 // https://freecurrencyapi.net
+// https://flagpedia.net/canada/download/api
 const axios = require("axios");
 const COUNTRY = require("../constant/Country.json");
-
+const COUNTRY_FLAG_LIST = require("../constant/CountryFlagSupported.json");
 const currencyApiInstance = axios.create({
     baseURL: "https://freecurrencyapi.net/api/v2/",
     headers: {
@@ -22,20 +23,24 @@ export function getAllCurrencies() {
 }
 
 export async function getInitialCurrencies() {
-    const currencies = await getAllCurrencies();
+    const currencies = await getAllCurrencies()
 
-    return Object.entries(currencies).map(([code, val]) => {
+    currencies.USD = 1
 
-        let foundIndex = COUNTRY.findIndex((arr) => [...arr].pop() === code);
-
-        return {
-            asset_id: code,
-            price_usd: val,
-            name: foundIndex !== -1 ? COUNTRY[foundIndex][0] : "",
-            url:
-                foundIndex !== -1
-                    ? `https://flagcdn.com/64x48/${COUNTRY[foundIndex][1].toLowerCase()}.png`
-                    : null,
-        };
-    });
+    console.log(JSON.stringify(currencies, null, 2))
+    return Object.entries(COUNTRY_FLAG_LIST)
+        .map(([countryCode, countryName]) => {
+            let foundIndex = COUNTRY.findIndex(
+                (arr) => arr[1].toLowerCase() === countryCode
+            );
+            if (foundIndex >= 0) {
+                return {
+                    name: countryName,
+                    asset_id: COUNTRY[foundIndex][3],
+                    price_usd: currencies[COUNTRY[foundIndex][3]],
+                    url: `https://flagcdn.com/64x48/${countryCode}.png`,
+                };
+            } else return false;
+        })
+        .filter((item) => item);
 }

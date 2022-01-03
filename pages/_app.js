@@ -151,13 +151,13 @@ const CURRENCY = {
 function MyApp({ Component, pageProps }) {
 
   const [coinsInfo, setCoinsInfo] = useState([])
-  const [currencyInfo, setCurrencyInfo] = useState(null)
-
+  const [currencyInfo, setCurrencyInfo] = useState([])
   async function loadResource() {
-    let coins = await getInitialCoins()
+    // let coins = await getInitialCoins()
+    // setCoinsInfo(coins)
     let currencies = await getInitialCurrencies()
 
-    setCoinsInfo(coins)
+
     setCurrencyInfo(currencies)
 
   }
